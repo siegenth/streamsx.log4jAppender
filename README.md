@@ -13,7 +13,8 @@ Benifits processing log messages in this manner :
  - Processing log analysis is more timlely, elimiated step(s) copying log files to log analysis server.
  - Reduction in complexity. 
 
-Below is a overview graphic.. ![overview graphic][log4jOverview.png]
+Below is a overview graphic.. 
+![overview graphic][log4jOverview.png]
 
 Project Overview at: http://ibmstreams.github.io/streamsx.log4j/
 
