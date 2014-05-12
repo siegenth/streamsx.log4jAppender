@@ -3,15 +3,15 @@
 The IBMStreams/social toolkit project is an open source IBM InfoSphere Streams 
 toolkit project supporting log4j appender.
 
-The log4j logging faciliy has can be configured to append log messages to  network 
+The log4j logging faciliy can be configured to append log messages to  network 
 socket which will transmit them to a server. Messages arriveing at the server are processed by the 
 server's appender. InfoSphere Streams can act as the server's appender in order so that all the messages
 can injected into Streams. Once the messages are in Streams they can be processed filter/analyzied/alerted.
 
 Benifits processing log messages in this manner :
  - Reduces the resource impact, log files do not need to be written to file.
- - Processing log analysis is more timlely, elimiated step(s) copying log files to log analysis server.
- - Reduction in complexity. 
+ - Processing log analysis is more timlely, elimiates step(s) copying files to an central server.
+ - Reduction in complexity, fewer components (files) to move about and track.   
 
 Below is a overview graphic showing two programs configured to send logging messages to a Streams instance, 
 in this example all the messages will be collected one file. 
