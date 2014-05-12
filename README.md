@@ -15,7 +15,7 @@ Benifits processing log messages in this manner :
 
 Below is a overview graphic.. 
 
-![overview graphic][log4jOverview]
+![overview graphic](log4jOverview.png)
 
 Project Overview at: http://ibmstreams.github.io/streamsx.log4j/
 
