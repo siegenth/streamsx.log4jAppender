@@ -30,19 +30,10 @@ import com.ibm.streams.operator.model.PrimitiveOperator;
 import com.ibm.streams.operator.samples.patterns.TupleProducer;
 
 /**
- * A source operator that does not receive any input streams and produces new tuples. 
- * The method <code>produceTuples</code> is called to begin submitting tuples.
- * <P>
- * For a source operator, the following event methods from the Operator interface can be called:
+ * <p>
+ * ReceiveLog4j source operator that does not receive any input streams and produces new tuples.
+ * Tuples generated arrive from java classes that have configured this node to be the log4j's appender.  
  * </p>
- * <ul>
- * <li><code>initialize()</code> to perform operator initialization</li>
- * <li>allPortsReady() notification indicates the operator's ports are ready to process and submit tuples</li> 
- * <li>shutdown() to shutdown the operator. A shutdown request may occur at any time, 
- * such as a request to stop a PE or cancel a job. 
- * Thus the shutdown() may occur while the operator is processing tuples, punctuation marks, 
- * or even during port ready notification.</li>
- * </ul>
  * <p>With the exception of operator initialization, all the other events may occur concurrently with each other, 
  * which lead to these methods being called concurrently by different threads.</p> 
  */
@@ -61,10 +52,6 @@ public class ReceiveLog4j extends TupleProducer {
 	public Metric getnConnectedLoggers() {
 		return this.nConnectedLoggers;
 	}
-	public void clientDisconnect(Socket socket) {
-        nConnectedLoggers.incrementValue((long)-1);
-		Logger.getLogger(this.getClass()).trace(" Client disconnected : " + socket.getInetAddress());
-	}
 
 	@CustomMetric(description="Number of messages logged.", kind=Kind.COUNTER)
 	public void setnLoggedMessages(Metric nLoggedMessages) {
@@ -74,6 +61,12 @@ public class ReceiveLog4j extends TupleProducer {
 		return this.nLoggedMessages;
 	}
 
+	public void clientDisconnect(Socket socket) {
+        nConnectedLoggers.incrementValue((long)-1);
+		Logger.getLogger(this.getClass()).trace(" Client disconnected : " + socket.getInetAddress());
+	}
+
+	
 	/**
 	 * Thread for calling <code>produceTuples()</code> to produce tuples 
 	 */
@@ -97,7 +90,6 @@ public class ReceiveLog4j extends TupleProducer {
 	public Socket getCurrentSocket() {
 		return currentSocket;
 	}
-
     /**
      * Initialize this operator. Called once before any tuples are processed.
      * @param context OperatorContext for this operator.
@@ -213,7 +205,6 @@ String log4jConfig;
             processThread.interrupt();
             processThread = null;
         }
-        System.out.println("shutdown");
         OperatorContext context = getOperatorContext();
         Logger.getLogger(this.getClass()).trace("Operator " + context.getName() + " shutting down in PE: " + context.getPE().getPEId() + " in Job: " + context.getPE().getJobId() );
         

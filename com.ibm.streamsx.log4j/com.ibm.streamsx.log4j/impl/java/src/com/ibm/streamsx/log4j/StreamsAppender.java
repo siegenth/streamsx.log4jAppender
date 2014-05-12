@@ -17,38 +17,35 @@ public class StreamsAppender extends AppenderSkeleton {
 	}
 	@Override
 	public void close() {
-		System.out.println("closing down logging");
 		receiveLog4j.clientDisconnect(socket);
-		// TODO Auto-generated method stub
-
 	}
 	
 	@Override
 	public boolean requiresLayout() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
 	@Override
 	protected void append(LoggingEvent arg0) {
 		Set<String> set = arg0.getProperties().keySet();
-		System.out.println("DumpKeyset");
+		int idx = 0;
+		// TODO check if you're in debug log mode - spare the cycles
 		for(String key : set) {
-			System.out.println("key :" + key);
+	        Logger.getLogger(this.getClass()).info("key["+ idx++  +" of " + set.size() + "]: " + key);
+	        
 		}
-		System.out.println("DumpKeyset - done");
-
-
         Logger.getLogger(this.getClass()).info("Logging event : " + arg0.toString());
-		try {
+
+        try {
 			receiveLog4j.produceTuples(this.layout.format(arg0));
 		} catch (Exception e) {
-	        Logger.getLogger(this.getClass()).error("Failed to write log message to streams, message;" + e.getMessage()); 
+	        Logger.getLogger(this.getClass()).error("Failed to write log message to streams, message:" + e.getMessage()); 
 			e.printStackTrace();
 		}
 	}
 
 }
+// TODO - Fix this mess......
 //I want to get this String into the StreamsAppender
 //so I set the storage in StreamsAppender but set the value
 //in the function that extends it. Putting the value 
@@ -59,6 +56,5 @@ class StreamsAppenderInitialize extends StreamsAppender{
 	public StreamsAppenderInitialize(ReceiveLog4j receiveLog4jIn) {	
 		receiveLog4j = receiveLog4jIn;
 		System.out.println("setting receiveLog4j:" + receiveLog4j );
-		
 	}
 }
