@@ -14,6 +14,7 @@ Benifits processing log messages in this manner :
  - Reduction in complexity. 
 
 Below is a overview graphic.. 
+
 ![overview graphic][log4jOverview]
 
 Project Overview at: http://ibmstreams.github.io/streamsx.log4j/
