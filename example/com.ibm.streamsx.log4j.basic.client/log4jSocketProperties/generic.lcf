@@ -1,0 +1,9 @@
+log4j.rootLogger=DEBUG,X
+
+# set the appender named X to b a xonsole appender
+
+log4j.appender.X=org.apache.log4j.ConsoleAppender
+
+# set layout 
+log4j.appender.X.layout=org.apache.log4j.PatternLayout
+log4j.appender.X.layout.conversionPattern=>>>>>>>>>>>%m%n

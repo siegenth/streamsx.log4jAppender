@@ -1,0 +1,19 @@
+namespace com.ibm.streamsx.log4j.basic ;
+
+use com.ibm.streamsx.log4j::ReceiveLog4j ;
+
+composite SmokeTest {
+	graph
+		stream<rstring message> Log4j = ReceiveLog4j(){
+			param
+				port : 24400 ;
+				log4jConfig : "streams.config" ;
+		}
+
+		()as LogSink = FileSink(Log4j){
+			param
+				file : "/dev/stdout" ;
+		}
+
+}
+

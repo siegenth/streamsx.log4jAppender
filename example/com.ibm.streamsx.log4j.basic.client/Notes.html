@@ -1,0 +1,110 @@
+<html>
+<body>
+<h2>Notes</h2>
+<dl>
+<dt>5/5/14</dt>
+<dd>
+<p>Updated notes, recalling what how this works. The goal is to turn it into and operator.</p>
+<p>What to call this operator.<p>
+<ul>
+<li>LogInject</li>
+<li>Log4JAppender
+</ul>
+
+ 
+</dd>
+</dl>
+<h1>Interfacing Streams to Logging.</h1>
+
+
+<h2>JavaLogging : tj.streams.javalogging</h2>
+<p>order of components : Filter, Handler, Filter, Formatter</p>
+<ul>
+<li>LoggingServer.java - accepts messages, start first.
+</li>
+<li>LogJava.java - receives messages, comes in XML format.
+<li>
+</ul>
+
+<h2>Log4j : tk.streams.log4j</h2>
+<p>order of components : Filter, Appender, Layout*, Renderer*. 
+If the appender is invoked and the data goes off (tcp) then 
+the Layout and Renderer are not invoked. These components
+are invoked on the receiver side closer to the user.  
+</p>
+<p>
+This is far more sophisticated, it has StreamsServer that accepts
+the socket connection from the client. The messages that are 
+accepted  and routed through the local sites .config properties file.
+</p>
+<h3>Version 1</h3>
+Simplist - Straight Forward
+<ul>
+<li>AdvancedLogging.java : client sends data, configuration passed on  command line.  
+<pre>
+-Dlog4j.configuration=file:socket.properties
+</pre>
+</li>
+<li>SocketServer.java : server </li>
+</ul>
+<h3>Version 2 </h3>
+<p>
+This version runs a program that is included log4j distributions.
+This will look for the configuration file(s) down the directory 
+structure that is passed in. The default is log4jSocketProperties/generic.lcf.
+</p>
+The run command...
+<pre>
+org.apache.log4j.net.SocketServer
+</pre>
+The Args passed.
+<pre>
+2020 socketServerLog4j.properties log4jSocketProperties
+</pre>
+Keep in mind the we have 2 sets of .config files. 
+<ol>
+<li> for the server that is running getting messages - (socketServerLog4j.properties)</li>
+<li> for the clients whose are sending log messages - each node sendin</li>
+a different configuration file, in the 'log4jSocketProperties' directory, look for a file with the name of the node - 'streams.config'. It seems like they have a default specifications 'generic.lcf'</ol> 
+
+<h3>Version 3 - Server with Formatter</h3>
+
+I need to bring up the server when the operator is started. 
+<ul>
+<li>Thread receives message from the client.</li>
+<li>Message is formatted by the log4j portion. I want this formatted by XML.</li> 
+<li>Send the message to Streams</li>
+</ul>
+
+<h3>The Server with Formatter for streams.</h3>
+	<p>
+		This is using the 'AdvancedLogging.java' code to send messages
+		to the server, this requires that a parameter be passed to the
+	java runtime, '-Dlog4j.configuration=file:socketLog4j.properties'. This controls how the logging messages are going to be output, in particular out the TCP port. </p>
+	
+	<p>
+FormattingServer.java : As connections come in from the remote server if fires up 
+log4j.ServerSocket(). The invocation is passed a config file (streams.config),
+which specifies a new appender : StreamsAppender.java
+</p>
+	<p>
+		socketServerLog4j.properties : Controls the logging for
+		FormattingServer.java.
+	</p>
+	<p>
+StreamsAppender.java : Gets messages from the ServerSocket, the message is formatted
+and return where it's written out to the terminal or the Streams. 
+</p>
+<p>
+streams.config : Logging configuration for the messages that come in from the remote
+logger. 
+</p>
+
+Renamed projects : new names
+<ol>
+<li>com.ibm.streamsx.log4j : toolkit </li>
+<li>com.ibm.streamsx.log4j.example : example adapter using toolkit</li>
+<li>com.ibm.streamsx.log4j.exampleclient : java code sends to adapter</li>
+<ol>
+</body>
+</html>
