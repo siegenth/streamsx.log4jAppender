@@ -13,7 +13,8 @@ Benifits processing log messages in this manner :
  - Processing log analysis is more timlely, elimiated step(s) copying log files to log analysis server.
  - Reduction in complexity. 
 
-Below is a overview graphic.. 
+Below is a overview graphic showing two programs configured to send logging messages to a Streams instance, 
+in this example all the messages will be collected one file. 
 
 ![overview graphic](log4jOverview.png)
 
