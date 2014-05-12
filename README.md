@@ -1,6 +1,6 @@
 ##README --  IBMStreams/streamsx.log4j
 
-The IBMStreams/social toolkit project is an open source IBM InfoSphere Streams 
+The IBMStreams/log4jAppender toolkit project is an open source IBM InfoSphere Streams 
 toolkit project supporting log4j appender.
 
 The log4j logging faciliy can be configured to append log messages to  network 
