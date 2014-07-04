@@ -3,8 +3,8 @@
 The IBMStreams/log4jAppender toolkit project is an open source IBM InfoSphere Streams 
 toolkit project supporting log4j appender.
 
-The log4j logging faciliy can be configured to append log messages to  network 
-socket which will transmit them to a server. Messages arriveing at the server are processed by the 
+The log4j logging facility can be configured to append log messages to  network 
+socket which will transmit them to a server. Messages arriving at the server are processed by the 
 server's appender. InfoSphere Streams can act as the server's appender in order so that all the messages
 can injected into Streams. Once the messages are in Streams they can be processed filter/analyzied/alerted.
 
